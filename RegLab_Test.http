@@ -1,0 +1,6 @@
+@RegLab_Test_HostAddress = http://localhost:5150
+
+GET {{RegLab_Test_HostAddress}}/Settings/
+Accept: application/json
+
+###
