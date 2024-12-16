@@ -1,42 +1,19 @@
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: settings_service_dev
+  reglab_test:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__MongoDB=mongodb://service_user_settings:service_user_settings@mongo:27017/user_settings?authSource=user_settings
-      - ConnectionStrings__Redis=redis:6379
+      - ASPNETCORE_ENVIRONMENT=Development  # Для разработки
+      - ASPNETCORE_URLS=http://+:80
     ports:
-      - "5000:80"
+      - "80:80"
     volumes:
-      - .:/app
+      - ./certs:/https
+      - ./app:/app
     networks:
-      - app-network
+      - reglab_network
     depends_on:
-      - mongo
       - redis
-
-  mongo:
-    image: mongo:latest
-    container_name: mongo_db_dev
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=service_user_settings
-      - MONGO_INITDB_ROOT_PASSWORD=service_user_settings
-    ports:
-      - "27017:27017"
-    networks:
-      - app-network
-
-  redis:
-    image: redis:latest
-    container_name: redis_dev
-    ports:
-      - "6379:6379"
-    networks:
-      - app-network
+      - mongo
 
 networks:
-  app-network:
+  reglab_network:
     driver: bridge
