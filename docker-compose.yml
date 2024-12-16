@@ -1,0 +1,40 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: settings_service_default
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__MongoDB=mongodb://service_user_settings:service_user_settings@mongo:27017/user_settings?authSource=user_settings
+      - ConnectionStrings__Redis=redis:6379
+    ports:
+      - "5000:80"
+    networks:
+      - app-network
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db_default
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=service_user_settings
+      - MONGO_INITDB_ROOT_PASSWORD=service_user_settings
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis_default
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

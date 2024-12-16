@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "redis1": {
+      "containerPorts": "6379:6379",
+      "secretStore": "LocalSecretsFile",
+      "containerName": "redis",
+      "containerImage": "redis:alpine",
+      "type": "redis.container",
+      "connectionId": "CacheConnection",
+      "dynamicId": null
+    },
+    "mongodb1": {
+      "containerPorts": "27017:27017",
+      "secretStore": "LocalSecretsFile",
+      "containerName": "mongodb",
+      "containerImage": "mongo",
+      "type": "mongodb.UserSettings.container",
+      "connectionId": "ConnectionStrings:DatabaseConnection",
+      "dynamicId": null
+    }
+  }
+}
