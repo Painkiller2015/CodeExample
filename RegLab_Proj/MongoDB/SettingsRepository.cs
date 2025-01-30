@@ -65,8 +65,7 @@ namespace RegLab_Test.MongoDB
             }
         }
         public async Task<UserSettings> UpdateUserSettingAsync(int userId, string settingName, UserSettings updatedSetting)
-        {
-            //TODO запретить переименовать, если уже существует такое имя
+        {            
             try
             {
                 var existingSetting = await GetUserSettingAsync(userId, settingName);
